@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<style>
+	* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+}
+
+body {
+	background: #f4f6f8;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.task-manager {
+	background: #ffffff;
+	width: 380px;
+	padding: 20px;
+	border-radius: 12px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.task-manager h1 {
+	text-align: center;
+	margin-bottom: 15px;
+	color: #333;
+}
+
+.task-input input,
+.task-input textarea {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	outline: none;
+	font-size: 14px;
+}
+
+.task-input textarea {
+	resize: none;
+	height: 70px;
+}
+
+.task-input input:focus,
+.task-input textarea:focus {
+	border-color: #4CAF50;
+}
+
+#addTaskbtn {
+	width: 100%;
+	padding: 10px;
+	border: none;
+	border-radius: 8px;
+	background: #4CAF50;
+	color: #fff;
+	font-size: 15px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+#addTaskbtn:hover {
+	background: #43a047;
+}
+
+#taskList {
+	list-style: none;
+	margin-top: 15px;
+}
+
+.task-item {
+	background: #f9f9f9;
+	padding: 12px;
+	border-radius: 8px;
+	margin-bottom: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.task-title {
+	font-size: 15px;
+	color: #333;
+}
+
+.task-description {
+	font-size: 13px;
+	color: #666;
+	margin-top: 4px;
+}
+
+.complete-btn,
+.delete-btn {
+	border: none;
+	padding: 6px 10px;
+	margin-left: 5px;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.complete-btn {
+	background: #2196F3;
+	color: white;
+}
+
+.delete-btn {
+	background: #f44336;
+	color: white;
+}
+
+.complete-btn:hover {
+	background: #1e88e5;
+}
+
+.delete-btn:hover {
+	background: #e53935;
+}
+.completed{
+	text-decoration:line-through;
+	color: black;
+}
+</style>
+<body>
+<div class="task-manager">
+	<h1>Task Manager</h1>
+
+	<div class="task-input">
+		<input type="text" id="taskTitle" placeholder="Task Title...">
+		<textarea id="task-desc" placeholder="Task Description"></textarea>
+		<button id="addTaskbtn">Add Task</button>
+	</div>
+
+	<ul id="taskList"></ul>
+</div>
+</body>
+<script>
+	document.addEventListener("DOMContentLoaded" , ()=>{
+	let taskTitle = document.getElementById('taskTitle');
+	let taskDesc = document.getElementById('task-desc');
+
+
+
+
+
+	let addTaskbtn = document.getElementById("addTaskbtn");
+	let taskList = document.getElementById("taskList");
+
+	addTaskbtn.addEventListener("click", () => {
+		let title = taskTitle.value;
+		let description = taskDesc.value;
+		if (title === "" || description === "") {
+			alert("Please enter both task title and description");
+			return;
+		}
+
+		const taskItem = document.createElement("li");
+		taskItem.classList.add("task-item");
+
+		taskItem.innerHTML = `
+			<div class = "task-content">
+				<h3 class="task-title">${title}</h3>
+				<p class="task-description">${description}</p>
+			</div>
+			<div>
+				<button class="complete-btn">✔</button>
+				<button class="delete-btn">❌</button>
+			</div>
+		`;
+	let completeBtn = taskItem.querySelector(".complete-btn");
+let deleteBtn = taskItem.querySelector(".delete-btn");
+
+deleteBtn.addEventListener('click', () => {
+	taskItem.remove();
+})
+
+completeBtn.addEventListener('click', () => {
+	taskItem.querySelector(".task-content").classList.toggle("completed");
+});
+
+		taskList.appendChild(taskItem);
+		taskTitle.value = "";
+		taskDesc.value = "";
+	})
+
+})
+</script>
+</html>

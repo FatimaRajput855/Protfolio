@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   <main>
+    <div class="container">
+        <section class="section-1">0</section>
+        <section class="section-2">
+           <article class="article-row">
+        <button class="square-div">C</button>
+            <button class="square-div">DEL</button>
+            <button class="square-div">%</button>
+            <button class="square-div">/</button>
+           </article>
+           <article class="article-row">
+            <button class="square-div">7</button>
+            <button class="square-div">8</button>
+            <button class="square-div">9</button>
+            <button class="square-div">*</button>
+           </article>
+           <article class="article-row">
+            <button class="square-div">4</button>
+            <button class="square-div">5</button>
+            <button class="square-div">6</button>
+            <button class="square-div">-</button>
+           </article>
+           <article class="article-row">
+            <button class="square-div">1</button>
+            <button class="square-div">2</button>
+            <button class="square-div">3</button>
+            <button class="square-div">+</button>
+           </article>
+           <article class="article-row">
+            <button class="square-div" id="thirdlast">0</button>
+            <button class="square-div" id="secondlast">.</button>
+           </article>
+           <article class="article-row">
+            <button class="square-div" id="last">=</button>
+           </article>
+        </section>
+    </div>
+   </main>
+</body>
+<script>
+  // 1️⃣ Display (screen) ko select kar rahe hain
+  const display = document.querySelector(".section-1");
+
+  // 2️⃣ Calculator ke tamam buttons ko select kar rahe hain
+  const buttons = document.querySelectorAll(".square-div");
+
+  // 3️⃣ Sab buttons par loop chala kar click event lagana
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      const value = button.textContent; // button ka text nikalte hain
+
+      // 4️⃣ Agar 'C' button click hua → screen clear kar do
+      if (value === "C") {
+        display.textContent = "0";
+        return;
+      }
+
+      // 5️⃣ Agar 'DEL' click hua → last character delete karo
+      if (value === "DEL") {
+        if (display.textContent.length > 1) {
+          display.textContent = display.textContent.slice(0, -1);
+        } else {
+          display.textContent = "0";
+        }
+        return;
+      }
+
+      // 6️⃣ Agar '=' click hua → expression evaluate karo
+      if (value === "=") {
+        try {
+          const result = eval(display.textContent); // calculate result
+          display.textContent = result;
+        } catch {
+          display.textContent = "Error";
+        }
+        return;
+      }
+
+      // 7️⃣ Agar display me '0' likha hai aur user number click kare to replace kar do
+      if (display.textContent === "0" && !isNaN(value)) {
+        display.textContent = value;
+        return;
+      }
+
+      // 8️⃣ Normal case: button ka value display me add karo
+      display.textContent += value;
+    });
+  });
+</script>
+
+</html>
